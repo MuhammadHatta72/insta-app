@@ -4,6 +4,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ThemeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,18 +21,23 @@ Route::get('/', function () {
     return redirect()->route('posts.index');
 });
 
+// Public routes
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    // Theme
+    Route::post('/theme/toggle', [ThemeController::class, 'toggle'])->name('theme.toggle');
+
     // Posts
-    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
     // Likes
-    Route::post('/posts/{post}/like', [LikeController::class, 'toggle'])->name('posts.like');
+    Route::post('/posts/{post}/like', [LikeController::class, 'toggle'])->name('likes.store');
 
     // Comments
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
