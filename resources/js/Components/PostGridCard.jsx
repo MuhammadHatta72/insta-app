@@ -85,18 +85,6 @@ export default function PostGridCard({ post, auth, onPostClick }) {
                             <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-white bg-opacity-50 text-gray-700 px-2 py-0.5 rounded-full text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                                 {currentMediaIndex + 1} / {media.length}
                             </div>
-
-                            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 flex gap-1">
-                                {media.map((_, index) => (
-                                    <div
-                                        key={index}
-                                        className={`w-2 h-2 rounded-full transition-all ${currentMediaIndex === index
-                                            ? 'bg-white'
-                                            : 'bg-white bg-opacity-50'
-                                            }`}
-                                    />
-                                ))}
-                            </div>
                         </>
                     )}
                 </div>
