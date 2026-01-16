@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('post_media', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('post_id')->constrained()->onDelete('cascade');
-            $table->text('content');
+            $table->string('media_path');
+            $table->enum('media_type', ['image', 'video'])->default('image');
+            $table->integer('order')->default(0);
             $table->timestamps();
 
             $table->index('post_id');
-            $table->index('created_at');
+            $table->index('order');
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('post_media');
     }
 };

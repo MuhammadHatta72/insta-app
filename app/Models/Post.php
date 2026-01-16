@@ -12,10 +12,9 @@ class Post extends Model
     protected $fillable = [
         'user_id',
         'caption',
-        'image_path',
     ];
 
-    protected $with = ['user'];
+    protected $with = ['user', 'media'];
 
     protected $withCount = ['likes', 'comments'];
 
@@ -32,6 +31,11 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class)->latest();
+    }
+
+    public function media()
+    {
+        return $this->hasMany(PostMedia::class)->orderBy('order');
     }
 
     public function isLikedBy($user)
