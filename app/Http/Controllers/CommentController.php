@@ -2,50 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, Post $post)
+    public function store(Request $request, $postId)
     {
         $validated = $request->validate([
             'content' => 'required|string|max:500',
-            'parent_id' => 'nullable|exists:comments,id',
         ]);
 
-        $comment = $post->comments()->create([
+        $comment = Comment::create([
+            'post_id' => $postId,
             'user_id' => auth()->id(),
             'content' => $validated['content'],
-            'parent_id' => $validated['parent_id'] ?? null,
+            'parent_id' => null,
         ]);
 
-        $comment->load('user', 'replies');
+        $comment->load('user');
 
         return response()->json([
+            'success' => true,
             'comment' => [
                 'id' => $comment->id,
                 'content' => $comment->content,
-                'parent_id' => $comment->parent_id,
+                'post_id' => $comment->post_id,
                 'user' => [
                     'id' => $comment->user->id,
                     'name' => $comment->user->name,
                 ],
-                'replies' => $comment->replies,
                 'created_at' => $comment->created_at->diffForHumans(),
+                'replies' => [],
             ],
         ]);
     }
 
-    public function destroy(Comment $comment)
+    public function reply(Request $request, Comment $comment)
     {
-        $this->authorize('delete', $comment);
+        $validated = $request->validate([
+            'content' => 'required|string|max:500',
+        ]);
 
-        $comment->delete();
+        $reply = Comment::create([
+            'post_id' => $comment->post_id,
+            'user_id' => auth()->id(),
+            'content' => $validated['content'],
+            'parent_id' => $comment->id,
+        ]);
+
+        $reply->load('user');
 
         return response()->json([
-            'message' => 'Comment deleted successfully',
+            'success' => true,
+            'reply' => [
+                'id' => $reply->id,
+                'content' => $reply->content,
+                'user' => [
+                    'id' => $reply->user->id,
+                    'name' => $reply->user->name,
+                ],
+                'created_at' => $reply->created_at->diffForHumans(),
+            ],
         ]);
     }
 }

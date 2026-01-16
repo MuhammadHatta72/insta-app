@@ -23,7 +23,6 @@ export default function PostForm({ onClose, auth }) {
 
         setMedia([...media, ...files]);
 
-        // Create previews
         files.forEach(file => {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -87,7 +86,6 @@ export default function PostForm({ onClose, auth }) {
                 timerProgressBar: true,
             });
 
-            // Reload page to show new post
             router.visit(route('posts.index'));
             onClose();
         } catch (error) {
@@ -130,11 +128,17 @@ export default function PostForm({ onClose, auth }) {
                         multiple
                         accept="image/*,video/*"
                         onChange={handleMediaChange}
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded dark:bg-gray-700 dark:text-white"
+                        className="block w-full text-sm text-gray-500
+                                    file:mr-4 file:py-2 file:px-4
+                                    file:rounded-lg file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-blue-50 file:text-blue-700
+                                    hover:file:bg-blue-100
+                                    dark:file:bg-gray-700 dark:file:text-blue-400
+                                    disabled:opacity-50"
                     />
                 </div>
 
-                {/* Media Previews */}
                 {previews.length > 0 && (
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {previews.map((preview, index) => (
