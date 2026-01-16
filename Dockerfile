@@ -39,9 +39,7 @@ RUN mkdir -p /home/instaapp/.composer && \
 WORKDIR /var/www
 
 # Copy entrypoint script
-COPY --chown=instaapp:instaapp entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-USER instaapp
 
 ENTRYPOINT ["/entrypoint.sh"]

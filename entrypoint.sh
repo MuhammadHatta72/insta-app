@@ -1,19 +1,11 @@
 #!/bin/bash
-set -e
 
-# Run as root to fix permissions and create symlink
-su - root -c "
-    # Ensure storage directory has correct permissions
-    chown -R www-data:www-data /var/www/storage
-    chmod -R 775 /var/www/storage
+# Create directories if they don't exist
+mkdir -p /var/www/storage /var/www/bootstrap/cache
 
-    # Remove old symlink if exists
-    rm -f /var/www/public/storage
+# Set proper permissions only for necessary directories (suppress all errors)
+chown -R instaapp:instaapp /var/www/storage 2>/dev/null || true
+chown -R instaapp:instaapp /var/www/bootstrap/cache 2>/dev/null || true
 
-    # Create symlink using relative path to work in Docker
-    cd /var/www/public
-    ln -s ../storage/app/public storage
-"
-
-# Continue with PHP-FPM
+# Run php-fpm
 exec php-fpm
