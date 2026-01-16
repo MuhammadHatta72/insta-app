@@ -20,9 +20,6 @@ class PostMedia extends Model
         'order' => 'integer',
     ];
 
-    /**
-     * Get the post that owns this media.
-     */
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
