@@ -11,7 +11,6 @@ class ThemeController extends Controller
     {
         $user = $request->user();
 
-        // Toggle between light and dark
         $newTheme = $user->theme === 'light' ? 'dark' : 'light';
 
         $user->update(['theme' => $newTheme]);
