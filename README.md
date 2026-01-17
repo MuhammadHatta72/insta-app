@@ -103,7 +103,7 @@ php artisan key:generate
 
 Jalankan migrations:
 ```bash
-php artisan migrate
+php artisan migrate:fresh
 ```
 
 Seed database (optional):
