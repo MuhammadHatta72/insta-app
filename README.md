@@ -1,59 +1,137 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# InstaApp - Instagram Clone
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-12.x-red" alt="Laravel">
+  <img src="https://img.shields.io/badge/React-18.x-blue" alt="React">
+  <img src="https://img.shields.io/badge/Inertia.js-2.0-purple" alt="Inertia">
+  <img src="https://img.shields.io/badge/Docker-✓-blue" alt="Docker">
 </p>
 
-## About Laravel
+Aplikasi social media mirip Instagram yang dibangun dengan Laravel 12, Inertia.js, React 18, dan Docker.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- ✅ **Autentikasi** - Register, Login, Logout dengan Laravel Breeze
+- ✅ **Posting** - Buat post dengan text dan gambar
+- ✅ **Like** - Like/unlike post
+- ✅ **Komentar** - Komentar pada post
+- ✅ **Hak Akses** - Policy untuk post, like, dan komentar
+- ✅ **API Backend** - RESTful API
+- ✅ **Modern Frontend** - React dengan Inertia.js
+- ✅ **Docker** - Containerized development environment
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠 Tech Stack
 
-## Learning Laravel
+### Backend
+- **Laravel 12** - PHP Framework
+- **MySQL 8.0** - Database
+- **Redis** - Cache & Session
+- **Laravel Sanctum** - API Authentication
+- **Laravel Breeze** - Authentication Scaffolding
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Frontend
+- **React 18** - UI Library
+- **Inertia.js 2.0** - Modern Monolith
+- **TailwindCSS 3** - Utility-first CSS
+- **Headless UI** - Accessible UI Components
+- **Vite** - Build Tool
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### DevOps
+- **Docker** - Containerization
+- **Docker Compose** - Multi-container orchestration
+- **Nginx** - Web Server
 
-## Laravel Sponsors
+## 📋 Prerequisites
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Pastikan Anda sudah menginstall:
+- **Docker Desktop** (untuk macOS/Windows) atau **Docker Engine** (untuk Linux)
+- **Docker Compose** v2.0+
+- **Git**
 
-### Premium Partners
+## 🔧 Setup & Installation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. Clone Repository (jika belum)
 
-## Contributing
+```bash
+git clone https://github.com/MuhammadHatta72/insta-app
+cd insta-app
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 2. Setup Environment
 
-## Code of Conduct
+Salin file environment:
+```bash
+cp .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+File `.env` sudah dikonfigurasi untuk Docker dengan setting berikut:
+- Database: MySQL (host: `db`)
+- Redis: Cache & Session (host: `redis`)
+- App URL: `http://localhost:8000`
 
-## Security Vulnerabilities
+### 3. Build & Start Docker Containers
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+docker-compose up -d
+```
 
-## License
+Ini akan menjalankan containers:
+- **app** - PHP-FPM (port internal)
+- **nginx** - Web Server (port 8000)
+- **db** - MySQL (port 3307)
+- **redis** - Redis (port 6380)
+- **node** - Vite Dev Server (untuk hot reload)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 4. Install Dependencies
+
+Masuk ke container app:
+```bash
+docker exec -it instaapp bash
+```
+
+Install PHP dependencies:
+```bash
+composer install
+```
+
+Generate application key:
+```bash
+php artisan key:generate
+```
+
+### 5. Setup Database
+
+Jalankan migrations:
+```bash
+php artisan migrate
+```
+
+Seed database (optional):
+```bash
+php artisan db:seed
+```
+
+### 6. Setup Storage
+
+Buat symbolic link untuk storage:
+```bash
+php artisan storage:link
+```
+
+Set permissions:
+```bash
+chmod -R 775 storage bootstrap/cache
+```
+
+### 7. Keluar dari Container
+
+```bash
+exit
+```
+
+### 8. Akses Aplikasi
+
+Buka browser dan akses:
+```
+http://localhost:8000
+```
