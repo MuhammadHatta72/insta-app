@@ -139,3 +139,17 @@ Buka browser dan akses:
 ```
 http://localhost:8000
 ```
+
+## 🔐 Login Access
+
+Setelah menjalankan seeder, Anda dapat login dengan kredensial berikut:
+
+### User 1
+- **Email**: `hatta@gmail.com`
+- **Password**: `password123`
+- **Name**: Muhammad Hatta
+
+### User 2
+- **Email**: `nasirin1@gmail.com`
+- **Password**: `password123`
+- **Name**: Khoirun Nasirin
