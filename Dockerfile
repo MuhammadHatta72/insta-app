@@ -38,12 +38,6 @@ RUN mkdir -p /home/instaapp/.composer && \
 # Set working directory
 WORKDIR /var/www
 
-# Setup permissions for Laravel directories
-RUN chown -R www-data:www-data /var/www/storage && \
-    chown -R www-data:www-data /var/www/bootstrap/cache && \
-    chmod -R 775 /var/www/storage && \
-    chmod -R 775 /var/www/bootstrap/cache
-
 # Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
