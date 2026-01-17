@@ -93,6 +93,10 @@ Install PHP dependencies:
 ```bash
 composer install
 ```
+jika error coba 
+```bash
+composer update
+```
 
 Generate application key:
 ```bash
