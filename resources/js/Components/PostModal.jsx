@@ -138,6 +138,37 @@ export default function PostModal({ post, auth, onClose }) {
 
     const handleMediaChange = (e) => {
         const files = Array.from(e.target.files);
+        const maxVideoSize = 5 * 1024 * 1024; // 5MB for videos
+        const maxImageSize = 10 * 1024 * 1024; // 10MB for images
+
+        // Validate file sizes
+        const invalidFiles = files.filter(file => {
+            const isVideo = file.type.startsWith('video/');
+            const maxSize = isVideo ? maxVideoSize : maxImageSize;
+            return file.size > maxSize;
+        });
+
+        if (invalidFiles.length > 0) {
+            const videoErrors = invalidFiles.filter(f => f.type.startsWith('video/'));
+            const imageErrors = invalidFiles.filter(f => !f.type.startsWith('video/'));
+
+            let errorMessage = '';
+            if (videoErrors.length > 0) {
+                errorMessage += `Video files must be less than 5MB. ${videoErrors.length} video(s) exceeded the limit.\n`;
+            }
+            if (imageErrors.length > 0) {
+                errorMessage += `Image files must be less than 10MB. ${imageErrors.length} image(s) exceeded the limit.`;
+            }
+
+            Swal.fire({
+                title: 'File Size Error!',
+                text: errorMessage,
+                icon: 'error',
+            });
+
+            e.target.value = ''; // Reset input
+            return;
+        }
 
         const newPreviews = files.map((file) => ({
             media_path: URL.createObjectURL(file),
@@ -307,7 +338,11 @@ export default function PostModal({ post, auth, onClose }) {
                                     disabled:opacity-50"
                             />
                             <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                                Add new media to existing ones, or remove items individually. Supported: JPEG, PNG, GIF, MP4, MOV, AVI
+                                Add new media to existing ones, or remove items individually.
+                                <br />
+                                <strong>Max size:</strong> Videos: 5MB, Images: 10MB
+                                <br />
+                                Supported: JPEG, PNG, GIF, MP4, MOV, AVI
                             </p>
                         </div>
 
