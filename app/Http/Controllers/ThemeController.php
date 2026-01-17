@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class ThemeController extends Controller
 {
     public function toggle(Request $request)
     {
-        $user = $request->user();
-
-        $newTheme = $user->theme === 'light' ? 'dark' : 'light';
-
-        $user->update(['theme' => $newTheme]);
+        $newTheme = $request->input('theme') === 'dark' ? 'dark' : 'light';
+        $user = User::find($request->input('user_id'));
+        if ($user) {
+            $user->theme = $newTheme;
+            $user->save();
+        }
 
         return back();
     }

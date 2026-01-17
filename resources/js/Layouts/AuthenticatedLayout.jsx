@@ -30,8 +30,17 @@ export default function AuthenticatedLayout({ header, children, onThemeChange, s
 
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
-        setTheme(newTheme);
-        router.post(route('theme.toggle'));
+        updateTheme(newTheme);
+        router.post(route('theme.toggle'), {
+            theme: newTheme,
+            user_id: user.id,
+        }, {
+            onSuccess: () => {
+                if (onThemeChange) {
+                    onThemeChange(newTheme);
+                }
+            },
+        });
     };
 
     return (
