@@ -270,7 +270,7 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function destroy(Post $post)
+    public function destroy(Request $request, Post $post)
     {
         if (auth()->id() !== $post->user_id) {
             abort(403, 'Unauthorized');
